@@ -14,7 +14,7 @@ function Navbar(){
             Trips
           </Link>
         </li>
-        <li className="font-crimson text-xl pl-3 inline">Plan a Trip</li>
+        <li className="font-crimson text-xl pl-3 pr-3 inline">Plan a Trip</li>
         <li className="font-crimson text-xl pl-3 inline">Log out</li>
       </ul>
     </nav>

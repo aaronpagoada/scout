@@ -14,10 +14,12 @@ function App() {
   return (
     <Router>
       <div className="bg-yellow-50 h-screen">
-        <header className='flex-col'>
-          <button className="bg-black text-white" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
-            Switch
-          </button>
+        <header>
+          <div className='flex justify-end'>
+            <button className="bg-black text-white" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
+              Switch
+            </button>
+          </div>
           {!isLoggedIn ? 
             <Navbar /> :
             <LoginRegisterBar />
