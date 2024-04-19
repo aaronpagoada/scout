@@ -1,8 +1,15 @@
 import React from "react";
+import TripCard from "../components/TripCard";
 
 function Trips() {
   return (
-    <h1 className="flex justify-center">Trips</h1>
+    <div>
+      <h1 className="flex justify-center">Trips</h1>
+      <TripCard />
+      <TripCard />
+      <TripCard />
+      <TripCard />
+    </div>
   )
 }
 
