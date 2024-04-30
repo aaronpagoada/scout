@@ -9,19 +9,36 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+const client = new mongodb.MongoClient(process.env.URI)
 
-async function connect(){
+async function connect(client){
   try{
-    await mongodb.MongoClient.connect(process.env.URI)
+    await client.connect();
     console.log("Connected to Scout")
   } catch(err) {
     console.error(err)
   }
 }
 
-connect();
+async function readDatabases(client){
+  try{
+    const databases = await client.db().admin().listDatabases();
+    const databaseNames = databases.databases.map(db => db.name)
+    return databaseNames
+  } catch(err) {
+    console.error(err)
+  }
+}
+
+connect(client);
+
+app.get("/trips", async (req, res) => {
+  const data = await readDatabases(client);
+  return res.json(data)
+})
 
 app.listen(8000, () => {
   console.log("Server up on port 8000")
 })
 
+ 
