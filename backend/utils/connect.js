@@ -7,4 +7,4 @@ async function connect(client){
   }
 }
 
-export default connect
+module.exports = connect

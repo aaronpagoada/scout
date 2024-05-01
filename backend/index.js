@@ -1,10 +1,11 @@
-import express from "express";
-import cors from "cors";
-import mongodb from "mongodb";
-import dotenv from "dotenv";
+const express = require("express")
+const cors = require("cors")
+const mongodb = require("mongodb")
+const dotenv = require("dotenv")
 
-import connect from "./utils/connect.js";
-import readDatabases from "./utils/readDatabases.js";
+const connect = require("./utils/connect.js")
+
+const trips = require("./routes/trips.js")
 
 dotenv.config();
 
@@ -16,10 +17,7 @@ const client = new mongodb.MongoClient(process.env.URI)
 
 connect(client);
 
-app.get("/trips", async (req, res) => {
-  const data = await readDatabases(client);
-  return res.json(data)
-})
+app.use("/trips", trips)
 
 app.listen(8000, () => {
   console.log("Server up on port 8000")
