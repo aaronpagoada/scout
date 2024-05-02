@@ -8,7 +8,7 @@ const tripSchema = new Schema({
 		required: true
 	},
 	date: {
-		type: Date,
+		type: String,
 		required: true
 	},
 	owner: {
@@ -23,7 +23,9 @@ const tripSchema = new Schema({
 		type: Array,
 		required: true
 	}
-}, { timestamps: true })
+}, 
+{ timestamps: true })
 
-module.export = mongoose.model("Trip", tripSchema)
+module.exports = mongoose.model("Trip", tripSchema)
+
 	
