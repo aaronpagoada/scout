@@ -1,4 +1,5 @@
 const Trip = require("../models/tripModel.js")
+const mongoose = require("mongoose")
 
 const getTrips = async (req, res) => {
 	try{
@@ -12,11 +13,15 @@ const getTrips = async (req, res) => {
 const getTrip = async (req, res) => {
 	const { id } = req.params
 
+	if(!mongoose.Types.ObjectId.isValid(id)){
+		return res.status(404).json({ error: "Trip not found, bad trip id" })
+	}
+
 	try{
 		const trip = await Trip.findById(id)
 		res.status(200).json(trip)
 	}catch(err){
-		res.status(404).json({ error: "Trip not found"})
+		res.status(404).json({ error: "Trip not found" })
 	}
 }
 
