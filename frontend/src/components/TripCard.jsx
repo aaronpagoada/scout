@@ -1,13 +1,13 @@
 import React from "react";
 import logo from "../logo.svg";
 
-function TripCard(){
+function TripCard({ trip }){
   return(
     <div>
       <img src={logo} alt="" />
-      <h3>Title</h3>
-      <p>Date</p>
-      <p>Location</p>
+      <h3>{trip.location}</h3>
+      <p>{trip.date}</p>
+      <p>{trip.owner}</p>
     </div>
   )
 }
