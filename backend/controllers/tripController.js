@@ -36,8 +36,42 @@ const createTrip = async (req, res) => {
 	}
 }
 
+const deleteTrip = async (req, res) => {
+	const { id } = req.params
+
+	if(!mongoose.Types.ObjectId.isValid(id)){
+		return res.status(404).json({ error: "Trip not found, bad trip id" })
+	}
+
+	try{
+		const trip = await Trip.findOneAndDelete({ _id: id })
+		res.status(200).json(trip)
+	}catch(err){
+		res.status(404).json({ error: "Trip not found" })
+	}
+}
+
+const updateTrip = async (req, res) => {
+	const { id } = req.params
+
+	if(!mongoose.Types.ObjectId.isValid(id)){
+		return res.status(404).json({ error: "Trip not found, bad trip id" })
+	}
+
+	try{
+		const trip = await Trip.findOneAndUpdate({ _id: id }, {
+			...req.body
+		})
+		res.status(200).json(trip)
+	}catch(err){
+		res.status(404).json({ error: "Trip not found" })
+	}
+}
+
 module.exports = {
 	getTrips,
 	getTrip,
-	createTrip
+	createTrip,
+	deleteTrip,
+	updateTrip
 }
