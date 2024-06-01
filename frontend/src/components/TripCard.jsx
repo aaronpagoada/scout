@@ -1,14 +1,23 @@
 import React from "react";
-import logo from "../logo.svg";
+import { Buffer } from "buffer";
 
 function TripCard({ trip }){
+	let date = new Date(trip.date)
+	const textDate = date.toDateString() 
+
+	const image = Buffer.from(trip.imageBuffer).toString('base64')
+
   return(
     <div>
-      <img src={logo} alt="" />
-      <h3>{trip.location}</h3>
-      <p>{trip.date}</p>
-      <p>{trip.owner}</p>
-    </div>
+			<div className="flex justify-center bg-yellow-100">
+      	<img height={600} width={400} src={`data:image/png;base64,${image}`} alt="Map" />
+			</div>
+			<div className="flex flex-col justify-start pl-2">
+				<h1 className="text-xl">{trip.location}</h1>
+				<h3 className="text-gray-500 text-l">{`${trip.city}, ${trip.state}`}</h3>
+				<p className="text-l">{textDate}</p>
+			</div>
+		</div>
   )
 }
 

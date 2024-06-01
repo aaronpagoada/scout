@@ -3,14 +3,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const tripSchema = new Schema({
-	location: {
-		type: String,
-		required: true
-	},
-	date: {
-		type: String,
-		required: true
-	},
 	owner: {
 		type: String,
 		required: true
@@ -19,9 +11,30 @@ const tripSchema = new Schema({
 		type: Array,
 		required: true
 	},
+	location: {
+		type: String,
+		required: true
+	},
+	city: {
+		type: String,
+		required: true
+	},
+	state: {
+		type: String,
+		required: true
+	},
+	date: {
+		type: String,
+		required: true
+	},
 	coordinates: {
 		type: Array,
 		required: true
+	},	
+	imageBuffer: {
+		type: Buffer,
+		required: true,
+		contentType: String
 	}
 }, 
 { timestamps: true })

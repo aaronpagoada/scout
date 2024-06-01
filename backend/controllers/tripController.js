@@ -1,5 +1,9 @@
-const Trip = require("../models/tripModel.js")
 const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+const Trip = require("../models/tripModel.js")
+const { getImageBuffer } = require("./utils/getImageBuffer.js")
+
+dotenv.config()
 
 const getTrips = async (req, res) => {
 	try{
@@ -26,10 +30,13 @@ const getTrip = async (req, res) => {
 }
 
 const createTrip = async (req, res) => {
-	const {location, date, owner, attendees, coordinates} = req.body
+	const {owner, attendees, location, city, state, date, coordinates} = req.body
+	const imageURL = `${process.env.MAPBOX_URL}${coordinates[0]},${coordinates[1]},${process.env.MAPBOX_SCOPE}/${process.env.MAPBOX_SIZE}?access_token=${process.env.MAPBOX_KEY}`
+
+	const imageBuffer = await getImageBuffer(imageURL)
 
 	try{
-		const trip = await Trip.create({location, date, owner, attendees, coordinates})
+		const trip = await Trip.create({owner, attendees, location, city, state, date, coordinates, imageBuffer})
 		res.status(200).json(trip)
 	}catch(err){
 		res.status(400).json({error: err.message})
