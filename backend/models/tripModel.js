@@ -8,7 +8,7 @@ const tripSchema = new Schema({
 		required: true
 	},
 	attendees: {
-		type: Array,
+		type: [String],
 		required: true
 	},
 	location: {
@@ -28,7 +28,7 @@ const tripSchema = new Schema({
 		required: true
 	},
 	coordinates: {
-		type: Array,
+		type: [Number],
 		required: true
 	},	
 	imageBuffer: {
