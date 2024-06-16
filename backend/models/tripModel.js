@@ -29,7 +29,7 @@ const tripSchema = new Schema({
 	},
 	coordinates: {
 		type: [Number],
-		required: false
+		required: true
 	},	
 	imageBuffer: {
 		type: Buffer,
