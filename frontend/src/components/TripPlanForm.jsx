@@ -10,14 +10,33 @@ function TripPlanForm(){
 	const [longitude, setLongitude] = useState("")
 	const [latitude, setLatitude] = useState("")
 	const [date, setDate] = useState("")
+  const [error, setError] = useState(null)
 
-	function handleSubmit(){
-		
-	}
+	const handleSubmit = async (e) => {
+    e.preventDefault()
 
+    const trip = {owner, location, attendees, city, state, longitude, latitude, date}
+
+    const response = await fetch("http://localhost:8000/trips/plan", {
+      method: "POST",
+      body: JSON.stringify(trip),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    const json = await response.json()
+
+    if(response.ok){
+      console.log("new trip created")
+    } else {
+      setError(json.error)
+    }
+  }
 	return (
 		<div className='w-3/5 flex flex-col items-center bg-yellow-100 p-4'>
-			<form className='w-5/6'>
+			{error && <div id='error'>{error}</div>}
+      <form className='w-5/6' onSubmit={handleSubmit}>
 				<label for="owner">Owner</label>
 				<br></br>
 				<input 
@@ -96,7 +115,7 @@ function TripPlanForm(){
 				<label for="date">Date</label>
 				<br></br>
 				<input 
-					className='w-[128px] h-8 pl-2 border-2 border-solid border-gray-300 focus:border-black focus:outline-none' 
+					className='w-[140px] h-8 pl-2 border-2 border-solid border-gray-300 focus:border-black focus:outline-none' 
 					type="date" 
 					id='state'
 					value={date}
@@ -104,10 +123,10 @@ function TripPlanForm(){
 				/>
 				<br></br>
 				<button 
-					onSubmit={handleSubmit} 
 					className='mt-4 w-32 rounded-md bg-[#026900] text-white hover:bg-black' 
 					type="submit"
-				>Submit
+				>
+          Submit
 				</button>
 			</form>
 		</div>
