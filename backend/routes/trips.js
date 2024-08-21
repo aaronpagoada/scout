@@ -14,7 +14,7 @@ router.get("/", getTrips)
 
 router.get("/:id", getTrip)
 
-router.post("/", createTrip)
+router.post("/plan", createTrip)
 
 router.delete("/:id", deleteTrip)
 

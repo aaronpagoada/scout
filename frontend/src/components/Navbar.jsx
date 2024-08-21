@@ -15,7 +15,7 @@ function Navbar(){
           </Link>
         </li>
         <li className="font-crimson text-xl pl-3 pr-3 inline">
-					<Link to="/plan">
+					<Link to="/trips/plan">
 						Plan a Trip
 					</Link>
 				</li>
