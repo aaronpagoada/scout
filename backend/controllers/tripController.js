@@ -34,20 +34,20 @@ const createTrip = async (req, res) => {
 	const {owner, attendees, location, city, state, date} = req.body
 	var {coordinates} = req.body
 	
-	if(!coordinates){
-		const forwardURL = `${process.env.MAPBOX_FORWARD_URL}?q=${city}%20${state}&access_token=${process.env.MAPBOX_KEY}`
+  try{
+	  if(!coordinates[0] && !coordinates[1]){
+		  const forwardURL = `${process.env.MAPBOX_FORWARD_URL}?q=${city}%20${state}&access_token=${process.env.MAPBOX_KEY}`
+		  
+      const forwardLocation = await getCoordinates(forwardURL)
 
-		const forwardLocation = await getCoordinates(forwardURL)
-
-		const forwardCoordinates = forwardLocation.features[0].properties.coordinates
+      const forwardCoordinates = forwardLocation.features[0].properties.coordinates
 		
-		coordinates = [forwardCoordinates.longitude, forwardCoordinates.latitude]
-	}
-	const imageURL = `${process.env.MAPBOX_STATIC_URL}${coordinates[0]},${coordinates[1]},${process.env.MAPBOX_SCOPE}/${process.env.MAPBOX_SIZE}?access_token=${process.env.MAPBOX_KEY}`
+		  coordinates = [forwardCoordinates.longitude, forwardCoordinates.latitude]
+	  }
+	  const imageURL = `${process.env.MAPBOX_STATIC_URL}${coordinates[0]},${coordinates[1]},${process.env.MAPBOX_SCOPE}/${process.env.MAPBOX_SIZE}?access_token=${process.env.MAPBOX_KEY}`
 
-	const imageBuffer = await getImageBuffer(imageURL)
+	  const imageBuffer = await getImageBuffer(imageURL)
 
-	try{
 		const trip = await Trip.create({owner, attendees, location, city, state, date, coordinates, imageBuffer})
 		res.status(200).json(trip)
 	}catch(err){

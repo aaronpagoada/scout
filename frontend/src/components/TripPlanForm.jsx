@@ -4,7 +4,7 @@ import states from '../data/states'
 function TripPlanForm(){
 	const [owner, setOwner] = useState("")
 	const [location, setLocation] = useState("")
-	const [attendees, setAttendees] = useState("")
+	const [attendees, setAttendees] = useState([""])
 	const [city, setCity] = useState("")
 	const [state, setState] = useState("")
 	const [longitude, setLongitude] = useState("")
@@ -15,7 +15,9 @@ function TripPlanForm(){
 	const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const trip = {owner, location, attendees, city, state, longitude, latitude, date}
+    const coordinates = [longitude, latitude]
+
+    const trip = {owner, attendees, location, city, state, date, coordinates}
 
     const response = await fetch("http://localhost:8000/trips/plan", {
       method: "POST",
@@ -33,6 +35,7 @@ function TripPlanForm(){
       setError(json.error)
     }
   }
+  
 	return (
 		<div className='w-3/5 flex flex-col items-center bg-yellow-100 p-4'>
 			{error && <div id='error'>{error}</div>}
@@ -64,7 +67,7 @@ function TripPlanForm(){
 					type="text" 
 					id='attendees'
 					value={attendees}
-					onChange={(e) => setAttendees(e.target.value)}
+					onChange={(e) => setAttendees([e.target.value])}
 				/>
 				<br></br>
 				<label for="city">City</label>

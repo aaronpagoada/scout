@@ -1,26 +1,12 @@
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const { streamToBuffer } = require('./streamToBuffer');
+
 const getCoordinates = async (forwardURL) => {
 	try{
 		const response = await fetch(forwardURL)
-		const stream = response.body
-		const reader = stream.getReader()
-		const readableStream = new ReadableStream({
-			start(controller) {
-				return pump();
-				function pump() {
-					return reader.read().then(({ done, value }) => {
-						if (done) {
-							controller.close();
-							return;
-						}
-						controller.enqueue(value);
-						return pump();
-					});
-				}
-			},
-		});
-		
-		const streamResponse = new Response(readableStream)
-		return streamResponse.json()
+		const coordinatesBuffer = await streamToBuffer(response.body)
+
+    return JSON.parse(coordinatesBuffer.toString())
 	}catch(err){
 		console.error(err)
 	}

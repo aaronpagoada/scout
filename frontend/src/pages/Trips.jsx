@@ -19,8 +19,6 @@ function Trips() {
 		fetchTrips()
 	}, [])
 
-	console.log(trips)
-
   return (
     <div className="flex flex-col justify-center items-center">
       <h1 className="text-4xl flex justify-center pb-8">Trips</h1>
