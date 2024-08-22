@@ -20,7 +20,7 @@ function Trips() {
 	}, [])
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center pt-24">
       <h1 className="text-4xl flex justify-center pb-8">Trips</h1>
 			<div className="w-5/6 grid grid-cols-4 gap-8">
 				{trips && trips.map((trip) => (
