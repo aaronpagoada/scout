@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import states from '../data/states'
 
 function TripPlanForm(){
+  // Is there a better way to handle so many state vars in a form?
+  // It works, but doesn't look very pretty
+
 	const [owner, setOwner] = useState("")
 	const [location, setLocation] = useState("")
 	const [attendees, setAttendees] = useState([""])
@@ -10,6 +13,7 @@ function TripPlanForm(){
 	const [longitude, setLongitude] = useState("")
 	const [latitude, setLatitude] = useState("")
 	const [date, setDate] = useState("")
+  const [success, setSuccess] = useState(false)
   const [error, setError] = useState(null)
 
 	const handleSubmit = async (e) => {
@@ -30,15 +34,28 @@ function TripPlanForm(){
     const json = await response.json()
 
     if(response.ok){
-      console.log("new trip created")
+      setOwner("")
+      setLocation("")
+      setAttendees([""])
+      setCity("")
+      setState("")
+      setLongitude("")
+      setLatitude("")
+      setDate("")
+      setError(null)
+      setSuccess(true)
+      setTimeout(() => {
+        setSuccess(false)
+      }, 4000)
     } else {
       setError(json.error)
     }
   }
-  
+
 	return (
 		<div className='w-3/5 flex flex-col items-center bg-yellow-100 p-4'>
-			{error && <div id='error'>{error}</div>}
+			{success && <div id='success'>New trip created!</div>}
+      {error && <div id='error'>{error}</div>}
       <form className='w-5/6' onSubmit={handleSubmit}>
 				<label for="owner">Owner</label>
 				<br></br>
