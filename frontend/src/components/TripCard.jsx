@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Buffer } from "buffer";
 
 function TripCard({ trip }){
@@ -10,7 +11,9 @@ function TripCard({ trip }){
   return(
     <div>
 			<div className="flex justify-center bg-yellow-100">
-      	<img height={600} width={400} src={`data:image/png;base64,${image}`} alt="Map" />
+        <Link to={`http://localhost:3000/trips/${trip._id}`}>
+      	  <img height={600} width={400} src={`data:image/png;base64,${image}`} alt="Map" />
+        </Link>
 			</div>
 			<div className="flex flex-col justify-start pl-2">
 				<h1 className="text-xl">{trip.location}</h1>
