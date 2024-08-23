@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Buffer } from "buffer";
+import getB64FromBuffer from "../js/getB64FromBuffer";
 
 function TripCard({ trip }){
 	let date = new Date(trip.date)
 	const textDate = date.toDateString() 
 
-	const image = Buffer.from(trip.imageBuffer).toString('base64')
+  // We can display an image using the b64 encoding of a buffer
+	const image = getB64FromBuffer(trip.imageBuffer)
 
   return(
     <div>
