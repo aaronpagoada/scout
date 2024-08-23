@@ -13,9 +13,9 @@ function App() {
   
   return (
     <Router>
-      <div className="bg-yellow-50 h-screen">
+      <div className="bg-yellow-50 min-h-screen">
         <header>
-          <button className="fixed top-0 bg-black text-white z-10" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
+          <button className="fixed top-0 bg-black text-white z-50" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
             Switch
           </button>
           {!isLoggedIn ? 

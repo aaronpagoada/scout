@@ -146,7 +146,7 @@ function TripPlanForm(){
 					className='mt-4 w-32 rounded-md bg-[#026900] text-white hover:bg-black' 
 					type="submit"
 				>
-          Submit
+          Create new trip
 				</button>
 			</form>
 		</div>
