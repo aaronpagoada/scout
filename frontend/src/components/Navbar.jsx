@@ -4,8 +4,8 @@ import logotext from "../logotext.svg";
 
 function Navbar(){
   return(
-    <div className="w-screen fixed top-0 z-40">
-      <nav className="bg-yellow-50 h-20 pt-2 pb-2 pl-8 pr-8 flex justify-between">
+    <div className="w-screen fixed top-0 z-40 drop-shadow">
+      <nav className="bg-yellow-100 h-20 pt-2 pb-2 pl-8 pr-8 flex justify-between">
         <Link className="flex items-center" to="/">
           <img src={logotext} className="h-14" alt="logo" />
         </Link>
