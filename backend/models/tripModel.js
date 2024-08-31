@@ -2,6 +2,20 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 
+const userSchema = new Schema({
+	email: {
+		type: String, 
+		required: true
+	}, 
+	name: {
+		type: String, 
+		required: true
+	},
+	password: {
+		type: String, 
+		required: true}
+})
+
 const tripSchema = new Schema({
 	owner: {
 		type: String,
@@ -39,6 +53,8 @@ const tripSchema = new Schema({
 }, 
 { timestamps: true })
 
+
+module.exports = mongoose.model("User", userSchema)
 module.exports = mongoose.model("Trip", tripSchema)
 
 	
