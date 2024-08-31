@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Trips from './pages/Trips';
 import Trip from './pages/Trip';
 import Plan from './pages/Plan';
-import Login from './pages/Login';
+import Login from './pages/Register';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 

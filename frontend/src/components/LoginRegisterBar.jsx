@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import logotext from "../logotext.svg";
 
@@ -16,8 +17,10 @@ function LoginRegisterBar(){
         </li>
         <li className="font-crimson text-xl pl-3 inline">Register</li>
       </ul>
-    </nav>
+    </nav> 
   )
 }
+
+
 
 export default LoginRegisterBar;
