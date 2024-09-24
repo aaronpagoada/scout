@@ -1,0 +1,69 @@
+{
+	"trips": [
+		{
+			"location": "New York, NY",
+			"date": "08/25/2023",
+      "owner": "Filipp Kazatsker",
+      "attendees": [
+				"Celeste Pagoada",
+				"Salome Ambokadze"
+			],
+			"coordinates": [
+				"40.730610",
+				"-73.935242"
+			]
+		},
+		{
+			"location": "New York, NY",
+			"date": "08/25/2023",
+      "owner": "Filipp Kazatsker",
+      "attendees": [
+				"Celeste Pagoada",
+				"Salome Ambokadze"
+			],
+			"coordinates": [
+				"40.730610",
+				"-73.935242"
+			]
+		},
+		{
+			"location": "New York, NY",
+			"date": "08/25/2023",
+      "owner": "Filipp Kazatsker",
+      "attendees": [
+				"Celeste Pagoada",
+				"Salome Ambokadze"
+			],
+			"coordinates": [
+				"40.730610",
+				"-73.935242"
+			]
+		},
+		{
+			"location": "New York, NY",
+			"date": "08/25/2023",
+      "owner": "Filipp Kazatsker",
+      "attendees": [
+				"Celeste Pagoada",
+				"Salome Ambokadze"
+			],
+			"coordinates": [
+				"40.730610",
+				"-73.935242"
+			]
+		},
+		{
+			"location": "New York, NY",
+			"date": "08/25/2023",
+      "owner": "Filipp Kazatsker",
+      "attendees": [
+				"Celeste Pagoada",
+				"Salome Ambokadze"
+			],
+			"coordinates": [
+				"40.730610",
+				"-73.935242"
+			]
+		}
+	]
+}

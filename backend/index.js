@@ -1,7 +1,9 @@
-import express from "express";
-import cors from "cors";
-import mongodb from "mongodb";
-import dotenv from "dotenv";
+const express = require("express")
+const cors = require("cors")
+const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+
+const trips = require("./routes/trips.js")
 
 dotenv.config();
 
@@ -9,36 +11,15 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const client = new mongodb.MongoClient(process.env.URI)
+mongoose.connect(process.env.URI)
+	.then(() => {
+		console.log("Connected to db")
+		app.listen(8000, () => {
+		console.log("Server up on port 8000")
+		})
+	})
+	.catch((err) => {
+		return console.error(err)
+	})
 
-async function connect(client){
-  try{
-    await client.connect();
-    console.log("Connected to Scout")
-  } catch(err) {
-    console.error(err)
-  }
-}
-
-async function readDatabases(client){
-  try{
-    const databases = await client.db().admin().listDatabases();
-    const databaseNames = databases.databases.map(db => db.name)
-    return databaseNames
-  } catch(err) {
-    console.error(err)
-  }
-}
-
-connect(client);
-
-app.get("/trips", async (req, res) => {
-  const data = await readDatabases(client);
-  return res.json(data)
-})
-
-app.listen(8000, () => {
-  console.log("Server up on port 8000")
-})
-
- 
+app.use("/trips", trips)

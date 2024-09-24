@@ -13,25 +13,23 @@ function App() {
   
   return (
     <Router>
-      <div className="bg-yellow-50 h-screen">
+      <div className="bg-yellow-50 min-h-screen">
         <header>
-          <div className='flex justify-end'>
-            <button className="bg-black text-white" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
-              Switch
-            </button>
-          </div>
+          <button className="fixed top-0 bg-black text-white z-50" onClick={() => {setIsLoggedIn(!isLoggedIn)}}>
+            Switch
+          </button>
           {!isLoggedIn ? 
             <Navbar /> :
             <LoginRegisterBar />
           }
-          <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/trips' element={<Trips />} />
-            <Route path='/trips/:id' element={<Trip />} />
-            <Route path='/plan' element={<Plan />} />
-            <Route path='/login' element={<Login />} />
-          </Routes>
         </header>
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route path='/trips' element={<Trips />} />
+          <Route path='/trips/:id' element={<Trip />} />
+          <Route path='/trips/plan' element={<Plan />} />
+          <Route path='/login' element={<Login />} />
+        </Routes>
       </div>
     </Router>
   );
