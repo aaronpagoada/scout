@@ -14,7 +14,11 @@ function LoginRegisterBar(){
             Log in
           </Link>
         </li>
-        <li className="font-crimson text-xl pl-3 inline">Register</li>
+        <li className="font-crimson text-xl pl-3 inline">
+          <Link to="/register">
+            Register
+          </Link>
+        </li>
       </ul>
     </nav>
   )
