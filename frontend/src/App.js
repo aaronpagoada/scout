@@ -1,10 +1,11 @@
 import LoginRegisterBar from './components/LoginRegisterBar';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Trips from './pages/Trips';
 import Trip from './pages/Trip';
 import Plan from './pages/Plan';
-import Login from './pages/Login';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from 'react';
 
@@ -25,10 +26,11 @@ function App() {
         </header>
         <Routes>
           <Route exact path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/trips' element={<Trips />} />
           <Route path='/trips/:id' element={<Trip />} />
           <Route path='/trips/plan' element={<Plan />} />
-          <Route path='/login' element={<Login />} />
         </Routes>
       </div>
     </Router>

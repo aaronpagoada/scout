@@ -18,6 +18,14 @@ function Trip() {
     
 		fetchTrip()
 	}, [])
+
+  if(!trip){
+    return (
+      <div className="pt-24">
+        <h1 className="flex justify-center">Loading trip...</h1>
+      </div>
+    )
+  }
   
 
   return (
