@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import states from '../data/states'
 
 function TripPlanForm(){
+	const navigate = useNavigate()
   // Is there a better way to handle so many state vars in a form?
   // It works, but doesn't look very pretty
 
@@ -33,6 +35,8 @@ function TripPlanForm(){
 
     const json = await response.json()
 
+		console.log(json)
+
     if(response.ok){
       setOwner("")
       setLocation("")
@@ -46,7 +50,8 @@ function TripPlanForm(){
       setSuccess(true)
       setTimeout(() => {
         setSuccess(false)
-      }, 4000)
+      }, 1000)
+			navigate(`/trips/${json._id}`)
     } else {
       setError(json.error)
     }
