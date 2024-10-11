@@ -1,4 +1,4 @@
-# Scout
+![Scout](./zion/src/assets/scouttextlogo.svg "Scout")
 ### Plan. Journal. Explore.
 ![Generic badge](https://img.shields.io/badge/Made%20with%20love%20in-Brooklyn,%20NY%20-gold)
 
