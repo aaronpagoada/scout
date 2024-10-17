@@ -1,31 +1,66 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <h3 className="text-black text-3xl mb-8">Log in</h3>
-      <form action="">
-        <div className="mb-4 flex flex-col items-start">
-          <label htmlFor="email">Email</label>
-          <input className="border-2 border-gray-300" id="email "type="text" />
-          <div></div>
+    <>
+      <Header />
+      <div className="w-full flex flex-col justify-center items-center">
+        <h3 className="text-black text-3xl mb-8">Log in</h3>
+        <form className="w-5/6" action="">
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-black" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="w-full h-9 border-2 border-gray-300 text-black rounded"
+              id="email"
+              type="text"
+            />
+          </div>
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-black" htmlFor="password">
+              Password
+            </label>
+            <input
+              className="w-full h-9 border-2 border-gray-300 text-black rounded"
+              id="password"
+              type="password"
+            />
+          </div>
+          <div className="w-full flex justify-between mb-8">
+            <div>
+              <input
+                className="mr-2"
+                type="checkbox"
+                name="rememberme"
+                id="rememberme"
+              />
+              <label className="text-black" htmlFor="rememberme">
+                Remember Me
+              </label>
+            </div>
+            <a href="http://">Forgot Password</a>
+          </div>
+          <div>
+            <button className="w-full">Log in</button>
+          </div>
+        </form>
+        <hr className="border-t-2 border-black w-5/6 h-2 mt-8" />
+        <div className="w-5/6 flex justify-center text-black mt-7">
+          Need an account?
+          <a className="ml-2" href="http://localhost:5173/register">
+            Sign up today
+          </a>
         </div>
-        <div className="mb-4 flex flex-col items-start">
-          <label htmlFor="password">Password</label>
-          <input className="border-2 border-gray-300" id="password" type="password" />
-          <div></div>
-        </div>
-        <div>
-          <button>Log in</button>
-        </div>
-      </form>
-    </div>
-
-  )
-
+      </div>
+      <Footer />
+    </>
+  );
 }
 
-export default LoginPage
+export default LoginPage;
