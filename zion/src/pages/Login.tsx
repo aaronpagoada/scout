@@ -19,7 +19,7 @@ function LoginPage() {
             <input
               className="w-full h-9 border-2 border-gray-300 text-black rounded"
               id="email"
-              type="text"
+              type="email"
             />
           </div>
           <div className="mb-8 flex flex-col items-start">
