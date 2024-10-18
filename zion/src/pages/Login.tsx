@@ -41,25 +41,27 @@ function LoginPage() {
                 name='rememberme'
                 id='rememberme'
               />
-              <label className='text-black' htmlFor='rememberme'>
+              <label className='text-sm text-black' htmlFor='rememberme'>
                 Remember Me
               </label>
             </div>
-            <a href='http://'>Forgot Password</a>
+            <a className='text-sm' href='http://'>
+              Forgot Password
+            </a>
           </div>
           <div>
             <button className='w-full'>Log in</button>
           </div>
           <hr className='border-t-2 border-black w-full h-2 mt-8' />
         </form>
-        <div className='w-5/6 flex justify-center text-black mt-8 lg:mb-8'>
+        <div className='w-5/6 flex justify-center text-black text-sm mt-8 lg:mb-8'>
           Don't have an account?
           <Link className='ml-2' to='/register'>
             Sign up today
           </Link>
         </div>
       </div>
-      <footer className='w-full fixed bottom-0 left-0 text-center mt-8 mb-8 text-gray-300'>
+      <footer className='w-full fixed bottom-0 left-0 text-center mt-8 mb-8 text-sm text-gray-300'>
         © Scout 2024
       </footer>
     </div>
