@@ -1,5 +1,5 @@
 import React from "react";
-import scoutlogo from "../assets/scoutgreenlogo.svg";
+import scoutlogo from "../assets/IM-scout.svg";
 
 function Header() {
   return (
