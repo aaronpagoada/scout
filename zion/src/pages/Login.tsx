@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -17,7 +16,7 @@ function LoginPage() {
               Email
             </label>
             <input
-              className="w-full h-9 border-2 border-gray-300 text-black rounded"
+              className="w-full h-9 pl-2 pr-6 border border-gray-300 focus:outline-none focus:border-black text-black rounded"
               id="email"
               type="email"
             />
@@ -27,7 +26,7 @@ function LoginPage() {
               Password
             </label>
             <input
-              className="w-full h-9 border-2 border-gray-300 text-black rounded"
+              className="w-full h-9 pl-2 pr-6 border border-gray-300 focus:outline-none focus:border-black text-black rounded"
               id="password"
               type="password"
             />
@@ -52,13 +51,15 @@ function LoginPage() {
         </form>
         <hr className="border-t-2 border-black w-5/6 h-2 mt-8" />
         <div className="w-5/6 flex justify-center text-black mt-7">
-          Need an account?
+          Don't have an account?
           <a className="ml-2" href="http://localhost:5173/register">
             Sign up today
           </a>
         </div>
       </div>
-      <Footer />
+      <footer className="w-full fixed bottom-0 left-0 text-center mt-8 mb-8 text-gray-300">
+        © Scout 2024
+      </footer>
     </>
   );
 }
