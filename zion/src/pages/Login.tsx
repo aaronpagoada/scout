@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const navigate = useNavigate();
 
   return (
     <div className="w-full lg:flex flex-col items-center">
@@ -52,9 +54,9 @@ function LoginPage() {
         </form>
         <div className="w-5/6 flex justify-center text-black mt-8 lg:mb-8">
           Don't have an account?
-          <a className="ml-2" href="http://localhost:5173/register">
+          <Link className="ml-2" to="/register">
             Sign up today
-          </a>
+          </Link>
         </div>
       </div>
       <footer className="w-full fixed bottom-0 left-0 text-center mt-8 mb-8 text-gray-300">
