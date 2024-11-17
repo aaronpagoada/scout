@@ -5,9 +5,10 @@ interface InputProps {
   label: string;
   type: string;
   required: boolean;
-  pattern: string;
+  pattern?: string;
   errorMessage: string;
   value: string;
+  password?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,12 +20,23 @@ function FormInput(props: InputProps) {
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
 
-    console.log(RegExp(inputProps.pattern).test(value), value);
+    const validatePassword = (password: string): boolean => {
+      console.log(password, value);
+      return password.localeCompare(value) == 0 ? true : false;
+    }
 
-    if (!new RegExp(inputProps.pattern).test(value)) {
-      setError(errorMessage);
+    if (name === "confirmPassword") {
+      if (!validatePassword(inputProps.password as string)) {
+        setError(errorMessage);
+      } else {
+        setError("");
+      } // need to validate confirmPassword from the password input, also need to bcrypt the password that is passed through props.
     } else {
-      setError("");
+      if (!new RegExp(inputProps.pattern as string).test(value)) {
+        setError(errorMessage);
+      } else {
+        setError("");
+      }
     }
   };
 
@@ -39,9 +51,8 @@ function FormInput(props: InputProps) {
         {label}
       </label>
       <input
-        className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${
-          error ? "border-red-500" : "border-gray-300"
-        } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+        className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${error ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
         onChange={handleChange}
         onBlur={handleBlur}
         value={value}

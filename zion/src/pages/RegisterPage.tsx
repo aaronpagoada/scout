@@ -55,7 +55,7 @@ function RegisterPage() {
       label: "Confirm Password",
       type: "password",
       required: true,
-      pattern: user.password,
+      password: user.password,
       errorMessage: "Passwords do not match",
     },
   ];
@@ -67,6 +67,7 @@ function RegisterPage() {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+    console.log(user);
   };
 
   return (
@@ -86,6 +87,7 @@ function RegisterPage() {
               errorMessage={input.errorMessage}
               value={user[input.name as keyof User]}
               onChange={onChange}
+              password={input.password}
             />
           ))}
           <div>
