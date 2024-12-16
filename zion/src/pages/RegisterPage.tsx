@@ -10,6 +10,13 @@ interface User {
   confirmPassword: string;
 }
 
+interface UserErrors {
+  username: boolean;
+  email: boolean;
+  password: boolean;
+  confirmPassword: boolean;
+}
+
 function RegisterPage() {
   const [user, setUser] = useState<User>({
     username: "",
@@ -17,6 +24,20 @@ function RegisterPage() {
     password: "",
     confirmPassword: "",
   });
+
+  const [errors, setErrors] = useState<UserErrors>({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  })
+
+  const [focused, setFocused] = useState({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  })
 
   const inputs = [
     {
@@ -57,7 +78,7 @@ function RegisterPage() {
       required: true,
       password: user.password,
       errorMessage: "Passwords do not match",
-    },
+    }
   ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,10 +86,45 @@ function RegisterPage() {
     console.log(user);
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-    console.log(user);
   };
+
+  const handleUEBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setFocused({ ...focused, [e.target.name]: true })
+    if (!new RegExp(e.target.pattern).test(e.target.value)) {
+      setErrors({ ...errors, [e.target.name]: true })
+    } else {
+      setErrors({ ...errors, [e.target.name]: false })
+    }
+  }
+
+  const validateConfirmPassword = (password: string, value: string): boolean => {
+    console.log(password, value)
+    return password.localeCompare(value) === 0 ? true : false
+  }
+
+  const handlePWBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    handleUEBlur(e)
+
+    if (focused.confirmPassword) {
+      validateConfirmPassword(user.password, user.confirmPassword) ?
+        setErrors({ ...errors, confirmPassword: false }) :
+        setErrors({ ...errors, confirmPassword: true })
+    }
+
+    // figure out why the password pattern check is failing even when password is valid,
+    // could be issue with the pattern or state persistance.
+
+    console.log(user, focused, errors)
+  }
+
+  const handleCPWBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setFocused({ ...focused, [e.target.name]: true })
+    validateConfirmPassword(user.password, user.confirmPassword) ?
+      setErrors({ ...errors, confirmPassword: false }) :
+      setErrors({ ...errors, confirmPassword: true })
+  }
 
   return (
     <div className="w-full lg:flex flex-col items-center">
@@ -76,20 +132,85 @@ function RegisterPage() {
       <div className="w-full flex flex-col justify-center items-center lg:max-w-md lg:w-1/3 lg:border lg:border-gray-300 lg:bg-gray-50">
         <h3 className="text-black text-3xl mb-8 md:mt-8">Sign up</h3>
         <form className="w-5/6 md:w-5/12 lg:w-5/6" onSubmit={handleSubmit}>
-          {inputs.map((input) => (
-            <FormInput
-              key={input.id}
-              name={input.name}
-              label={input.label}
-              type={input.type}
-              required={input.required}
-              pattern={input.pattern}
-              errorMessage={input.errorMessage}
-              value={user[input.name as keyof User]}
-              onChange={onChange}
-              password={input.password}
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-gray-500 text-sm" htmlFor="username">
+              Username
+            </label>
+            <input
+              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.username ? "border-red-500" : "border-gray-300"
+                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+              onChange={handleChange}
+              onBlur={handleUEBlur}
+              name="username"
+              pattern="^[A-Za-z0-9]{3,16}$"
+              required
+              type="text"
             />
-          ))}
+            {errors.username && focused.username && (
+              <span className="text-red-500 text-xs">
+                Username should be 3-16 characters and should not include special characters
+              </span>
+            )}
+          </div>
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-gray-500 text-sm" htmlFor="email">
+              Email
+            </label>
+            <input
+              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.email ? "border-red-500" : "border-gray-300"
+                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+              onChange={handleChange}
+              onBlur={handleUEBlur}
+              name="email"
+              pattern="^[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*$"
+              required
+              type="email"
+            />
+            {errors.email && focused.email && (
+              <span className="text-red-500 text-xs">
+                Invalid email
+              </span>
+            )}
+          </div>
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-gray-500 text-sm" htmlFor="password">
+              Password
+            </label>
+            <input
+              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.password ? "border-red-500" : "border-gray-300"
+                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+              onChange={handleChange}
+              onBlur={handlePWBlur}
+              name="password"
+              pattern="^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"
+              required
+              type="password"
+            />
+            {errors.password && focused.password && (
+              <span className="text-red-500 text-xs">
+                Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character
+              </span>
+            )}
+          </div>
+          <div className="mb-8 flex flex-col items-start">
+            <label className="text-gray-500 text-sm" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+              onChange={handleChange}
+              onBlur={handleCPWBlur}
+              name="confirmPassword"
+              required
+              type="password"
+            />
+            {errors.confirmPassword && focused.confirmPassword && (
+              <span className="text-red-500 text-xs">
+                Passwords do not match
+              </span>
+            )}
+          </div>
           <div>
             <button className="w-full">Sign up</button>
           </div>
@@ -102,7 +223,7 @@ function RegisterPage() {
           </Link>
         </div>
       </div>
-      <footer className="w-full fixed bottom-0 left-0 text-center mt-8 mb-8 text-gray-300">
+      <footer className="w-full fixed bottom-0 left-0 text-center text-sm mt-8 mb-8 text-gray-300">
         © Scout 2024
       </footer>
     </div>
