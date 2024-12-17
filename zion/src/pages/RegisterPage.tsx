@@ -91,12 +91,20 @@ function RegisterPage() {
   };
 
   const handleUEBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    console.log(focused, e.target.name)
     setFocused({ ...focused, [e.target.name]: true })
-    if (!new RegExp(e.target.pattern).test(e.target.value)) {
-      setErrors({ ...errors, [e.target.name]: true })
-    } else {
+
+    console.log(new RegExp(e.target.pattern).test(e.target.value))
+    if (new RegExp(e.target.pattern).test(e.target.value)) {
+
       setErrors({ ...errors, [e.target.name]: false })
+    } else {
+
+      setErrors({ ...errors, [e.target.name]: true })
     }
+    console.log(user, focused, errors)
+
+    // bruh the state seems not be changing, maybe investiagte there
   }
 
   const validateConfirmPassword = (password: string, value: string): boolean => {
@@ -114,13 +122,10 @@ function RegisterPage() {
     }
 
     // figure out why the password pattern check is failing even when password is valid,
-    // could be issue with the pattern or state persistance.
-
-    console.log(user, focused, errors)
   }
 
-  const handleCPWBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setFocused({ ...focused, [e.target.name]: true })
+  const handleCPWBlur = () => {
+    setFocused({ ...focused, confirmPassword: true })
     validateConfirmPassword(user.password, user.confirmPassword) ?
       setErrors({ ...errors, confirmPassword: false }) :
       setErrors({ ...errors, confirmPassword: true })
