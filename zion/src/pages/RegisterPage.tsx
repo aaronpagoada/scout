@@ -10,13 +10,6 @@ interface User {
   confirmPassword: string;
 }
 
-interface UserErrors {
-  username: boolean;
-  email: boolean;
-  password: boolean;
-  confirmPassword: boolean;
-}
-
 function RegisterPage() {
   const [user, setUser] = useState<User>({
     username: "",
@@ -25,7 +18,7 @@ function RegisterPage() {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<UserErrors>({
+  const [errors, setErrors] = useState({
     username: false,
     email: false,
     password: false,
@@ -91,29 +84,37 @@ function RegisterPage() {
   };
 
   const handleUEBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    console.log(focused, e.target.name)
     setFocused({ ...focused, [e.target.name]: true })
 
-    console.log(new RegExp(e.target.pattern).test(e.target.value))
     if (new RegExp(e.target.pattern).test(e.target.value)) {
-
       setErrors({ ...errors, [e.target.name]: false })
     } else {
-
       setErrors({ ...errors, [e.target.name]: true })
     }
-    console.log(user, focused, errors)
-
     // bruh the state seems not be changing, maybe investiagte there
   }
 
   const validateConfirmPassword = (password: string, value: string): boolean => {
-    console.log(password, value)
     return password.localeCompare(value) === 0 ? true : false
   }
 
   const handlePWBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    handleUEBlur(e)
+    setFocused({ ...focused, password: true })
+
+    const regex = new RegExp(e.target.pattern);
+    console.log("Pattern:", e.target.pattern);
+    console.log("Password:", user.password);
+    console.log("Regex test result:", regex.test(user.password));
+    console.log("Password:", e.target.value);
+    console.log("Regex test result:", regex.test(e.target.value));
+
+    if (regex.test(user.password)) {
+      console.log("Good pass")
+      setErrors({ ...errors, password: false })
+    } else {
+      console.log("bad pass")
+      setErrors({ ...errors, password: true })
+    }
 
     if (focused.confirmPassword) {
       validateConfirmPassword(user.password, user.confirmPassword) ?
@@ -121,7 +122,7 @@ function RegisterPage() {
         setErrors({ ...errors, confirmPassword: true })
     }
 
-    // figure out why the password pattern check is failing even when password is valid,
+    console.log(errors) // figure out why the password pattern check is failing even when password is valid,
   }
 
   const handleCPWBlur = () => {
@@ -147,7 +148,7 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handleUEBlur}
               name="username"
-              pattern="^[A-Za-z0-9]{3,16}$"
+              pattern="[A-Za-z0-9]{3,16}"
               required
               type="text"
             />
@@ -167,7 +168,7 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handleUEBlur}
               name="email"
-              pattern="^[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*$"
+              pattern="[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*"
               required
               type="email"
             />
@@ -187,7 +188,7 @@ function RegisterPage() {
               onChange={handleChange}
               onBlur={handlePWBlur}
               name="password"
-              pattern="^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$"
+              pattern="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}"
               required
               type="password"
             />
