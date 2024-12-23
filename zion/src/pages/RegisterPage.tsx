@@ -1,78 +1,35 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import FormInput from "../components/FormInput";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 interface User {
   username: string;
   email: string;
   password: string;
-  confirmPassword: string;
 }
 
 function RegisterPage() {
   const [user, setUser] = useState<User>({
     username: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    password: ""
   });
 
   const [errors, setErrors] = useState({
     username: false,
     email: false,
-    password: false,
-    confirmPassword: false,
+    password: false
   })
 
   const [focused, setFocused] = useState({
     username: false,
     email: false,
-    password: false,
-    confirmPassword: false,
+    password: false
   })
 
-  const inputs = [
-    {
-      id: 1,
-      name: "username",
-      label: "Username",
-      type: "text",
-      required: true,
-      pattern: `^[A-Za-z0-9]{3,16}$`,
-      errorMessage:
-        "Username should be 3-16 characters and should not include special characters",
-    },
-    {
-      id: 2,
-      name: "email",
-      label: "Email",
-      type: "email",
-      required: true,
-      pattern:
-        "^[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:.[a-zA-Z0-9]+)*$",
-      errorMessage: "Invalid email",
-    },
-    {
-      id: 3,
-      name: "password",
-      label: "Password",
-      type: "password",
-      required: true,
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
-      errorMessage:
-        "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character",
-    },
-    {
-      id: 4,
-      name: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      required: true,
-      password: user.password,
-      errorMessage: "Passwords do not match",
-    }
-  ];
+  const [visibility, setVisibility] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -91,23 +48,12 @@ function RegisterPage() {
     } else {
       setErrors({ ...errors, [e.target.name]: true })
     }
-    // bruh the state seems not be changing, maybe investiagte there
-  }
-
-  const validateConfirmPassword = (password: string, value: string): boolean => {
-    return password.localeCompare(value) === 0 ? true : false
   }
 
   const handlePWBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused({ ...focused, password: true })
 
     const regex = new RegExp(e.target.pattern);
-    console.log("Pattern:", e.target.pattern);
-    console.log("Password:", user.password);
-    console.log("Regex test result:", regex.test(user.password));
-    console.log("Password:", e.target.value);
-    console.log("Regex test result:", regex.test(e.target.value));
-
     if (regex.test(user.password)) {
       console.log("Good pass")
       setErrors({ ...errors, password: false })
@@ -115,21 +61,13 @@ function RegisterPage() {
       console.log("bad pass")
       setErrors({ ...errors, password: true })
     }
-
-    if (focused.confirmPassword) {
-      validateConfirmPassword(user.password, user.confirmPassword) ?
-        setErrors({ ...errors, confirmPassword: false }) :
-        setErrors({ ...errors, confirmPassword: true })
-    }
-
-    console.log(errors) // figure out why the password pattern check is failing even when password is valid,
   }
 
-  const handleCPWBlur = () => {
-    setFocused({ ...focused, confirmPassword: true })
-    validateConfirmPassword(user.password, user.confirmPassword) ?
-      setErrors({ ...errors, confirmPassword: false }) :
-      setErrors({ ...errors, confirmPassword: true })
+  const handleClick = () => {
+    setVisibility(!visibility)
+
+    const passwordInput = document.getElementById("password") as HTMLInputElement
+    passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password"
   }
 
   return (
@@ -182,38 +120,25 @@ function RegisterPage() {
             <label className="text-gray-500 text-sm" htmlFor="password">
               Password
             </label>
-            <input
-              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.password ? "border-red-500" : "border-gray-300"
-                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
-              onChange={handleChange}
-              onBlur={handlePWBlur}
-              name="password"
-              pattern="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}"
-              required
-              type="password"
-            />
+            <div className="relative inline-block w-full">
+              <input
+                className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-12 border ${errors.password ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
+                onChange={handleChange}
+                onBlur={handlePWBlur}
+                name="password"
+                id="password"
+                pattern="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}"
+                required
+                type="password"
+              />
+              <button className="bg-transparent absolute bottom-0 right-0 pr-3 hover:bg-transparent h-full flex justify-center items-center" onClick={handleClick}>
+                {!visibility ? (<VisibilityOffOutlinedIcon fontSize="small" sx={{ color: '#9ca3af' }} />) : (<VisibilityOutlinedIcon fontSize="small" sx={{ color: '#9ca3af' }} />)}
+              </button>
+            </div>
             {errors.password && focused.password && (
               <span className="text-red-500 text-xs">
                 Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character
-              </span>
-            )}
-          </div>
-          <div className="mb-8 flex flex-col items-start">
-            <label className="text-gray-500 text-sm" htmlFor="confirmPassword">
-              Confirm Password
-            </label>
-            <input
-              className={`transition duration-150 ease-linear w-full h-9 pl-2 pr-6 border ${errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                } focus:outline-none focus:border-black text-black rounded hover:border-gray-400`}
-              onChange={handleChange}
-              onBlur={handleCPWBlur}
-              name="confirmPassword"
-              required
-              type="password"
-            />
-            {errors.confirmPassword && focused.confirmPassword && (
-              <span className="text-red-500 text-xs">
-                Passwords do not match
               </span>
             )}
           </div>
