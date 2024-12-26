@@ -63,7 +63,8 @@ function RegisterPage() {
     }
   }
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     setVisibility(!visibility)
 
     const passwordInput = document.getElementById("password") as HTMLInputElement
