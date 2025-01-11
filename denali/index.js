@@ -1,16 +1,15 @@
-import express from "express";
-import { connectToDatabase } from "./database/connectToDatabase.js";
-import dotenv from "dotenv";
-import auth from "./routes/auth.js"
-import cookieParser from "cookie-parser";
-import cors from "cors";
-
-dotenv.config()
+const express = require("express");
+const connectToDatabase = require("./database/connectToDatabase.js");
+const dotenv = require("dotenv").config();
+const auth = require("./routes/auth.js");
+// import cookieParser from "cookie-parser";
+const cors = require("cors");
 
 const app = express()
+
 app.use(express.json())
 app.use(cors())
-app.use(cookieParser())
+// app.use(cookieParser())
 
 connectToDatabase()
 

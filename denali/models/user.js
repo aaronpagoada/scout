@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true
   },
@@ -14,14 +14,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isVerified: {
-    type: Boolean,
-    default: false
-  },
-  resetPasswordToken: String,
-  resetPasswordTokenExpiresAt: Date,
-  verificationToken: String,
-  verificationTokenExpiresAt: Date
 });
 
 export const User = mongoose.model("User", userSchema);

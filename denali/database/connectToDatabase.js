@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-export const connectToDatabase = async () => {
+const connectToDatabase = async () => {
   mongoose.connect(process.env.MONGO_URI)
     .then((connection) => {
       console.log("Connected to db")
@@ -13,3 +13,7 @@ export const connectToDatabase = async () => {
       return console.error(err)
     })
 };
+
+module.exports = connectToDatabase
+
+// add .env
