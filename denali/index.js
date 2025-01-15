@@ -12,9 +12,11 @@ app.use(cors())
 // app.use(cookieParser())
 
 connectToDatabase()
+  .then(() => {
+    app.listen(8000, () => {
+      console.log("Server up on port 8000!")
+    })
+  })
 
 app.use("/api/auth", auth)
 
-app.listen(8000, () => {
-  console.log("Server up on port 8000!")
-})
