@@ -6,10 +6,13 @@ import PlanPage from './pages/PlanPage';
 import TripPage from './pages/TripPage';
 import TripsPage from './pages/TripsPage';
 import RegisterPage from './pages/RegisterPage';
+import axios from 'axios';
 import './App.css';
 
+axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.withCredentials = true;
+
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <Router>
