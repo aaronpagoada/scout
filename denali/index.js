@@ -1,15 +1,21 @@
 const express = require("express");
 const connectToDatabase = require("./database/connectToDatabase.js");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv")
 const auth = require("./routes/auth.js");
 // import cookieParser from "cookie-parser";
 const cors = require("cors");
 
+dotenv.config();
+
 const app = express()
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:5173"
+}))
 // app.use(cookieParser())
+
 
 connectToDatabase()
   .then(() => {

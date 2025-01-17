@@ -3,9 +3,9 @@ const User = require("../models/user.js");
 
 const test = async (req, res) => {
   try {
-    res.status(200).json({ success: true })
+    res.status(200).json({ message: "hi there" })
   } catch (err) {
-    res.status(400).json({ error: true })
+    res.status(400).json({ message: "bye" })
   }
 }
 
