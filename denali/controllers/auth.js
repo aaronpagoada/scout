@@ -21,8 +21,27 @@ const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    const user = await User.create({ username, email, password });
+    if (!username) {
+      return res.json({
+        error: "Username is required"
+      })
+    }
 
+    if (!password) {
+      return res.json({
+        error: "Password is required"
+      })
+    }
+
+    const userExists = await User.findOne({ email })
+
+    if (userExists) {
+      return res.json({
+        error: "Email is already in use"
+      })
+    }
+
+    const user = await User.create({ username, email, password });
 
     res.status(200).json(user);
   } catch (err) {
