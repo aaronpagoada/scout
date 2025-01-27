@@ -21,27 +21,24 @@ const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    if (!username) {
+    const usernameExists = await User.findOne({ username })
+
+    if (usernameExists) {
       return res.json({
-        error: "Username is required"
+        error: "Username is already in use"
       })
     }
 
-    if (!password) {
-      return res.json({
-        error: "Password is required"
-      })
-    }
+    const emailExists = await User.findOne({ email })
 
-    const userExists = await User.findOne({ email })
-
-    if (userExists) {
+    if (emailExists) {
       return res.json({
         error: "Email is already in use"
       })
     }
 
     const user = await User.create({ username, email, password });
+    console.log(`User ${user.username} created`)
 
     res.status(200).json(user);
   } catch (err) {

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
@@ -11,6 +14,8 @@ interface User {
 }
 
 function RegisterPage() {
+  const navigate = useNavigate()
+
   const [user, setUser] = useState<User>({
     username: "",
     email: "",
@@ -31,10 +36,27 @@ function RegisterPage() {
 
   const [visibility, setVisibility] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
+    const { username, email, password } = user
+
+    try {
+      const { data } = await axios.post("/register", {
+        username, email, password
+      })
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setUser({ username: "", email: "", password: "" })
+        toast.success("Registration successful. Welcome!")
+        navigate("/login")
+      }
+    } catch (error) {
+      console.error(error)
+    }
   };
+
+  // figure out why onSubmit not working on button click on mobile
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
