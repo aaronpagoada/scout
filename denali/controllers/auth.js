@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.js");
+const { hashPassword, comparePasswords } = require("../utils/auth.js")
 
 const test = async (req, res) => {
   try {
@@ -37,7 +38,9 @@ const register = async (req, res) => {
       })
     }
 
-    const user = await User.create({ username, email, password });
+    const hashedPassword = await hashPassword(password)
+
+    const user = await User.create({ username, email, password: hashedPassword });
     console.log(`User ${user.username} created`)
 
     res.status(200).json(user);
