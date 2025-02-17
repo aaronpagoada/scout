@@ -11,7 +11,27 @@ const test = async (req, res) => {
 }
 
 const login = async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
 
+    if (!user) {
+      return res.json({
+        error: "No user found"
+      })
+    }
+    const match = await comparePasswords(password, user.password)
+
+    if (match) {
+      res.json("Passwords match")
+    } else {
+      return res.json({
+        error: "Password is incorrect"
+      })
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const logout = async (req, res) => {
