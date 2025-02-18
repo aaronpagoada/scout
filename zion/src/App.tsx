@@ -14,7 +14,6 @@ axios.defaults.baseURL = "http://localhost:8000/api/auth";
 axios.defaults.withCredentials = true;
 
 function App() {
-
   return (
     <>
       <Toaster position='bottom-right' toastOptions={{ duration: 2000 }} />

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/user.js");
 const { hashPassword, comparePasswords } = require("../utils/auth.js")
+const jwt = require("jsonwebtoken");
 
 const test = async (req, res) => {
   try {
@@ -23,7 +24,12 @@ const login = async (req, res) => {
     const match = await comparePasswords(password, user.password)
 
     if (match) {
-      res.json("Passwords match")
+      jwt.sign({ email: user.email, id: user._id, username: user.username }, process.env.JWT_SECRET, {}, (err, token) => {
+        if (err) {
+          throw err
+        }
+        res.cookie("SCO_TOKEN", token).json(user)
+      })
     } else {
       return res.json({
         error: "Password is incorrect"
