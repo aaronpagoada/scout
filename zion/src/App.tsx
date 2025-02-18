@@ -9,7 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
-import { UserContextProvider } from './context/userContext';
+import UserContextProvider from './context/userContext';
 
 axios.defaults.baseURL = "http://localhost:8000/api/auth";
 axios.defaults.withCredentials = true;

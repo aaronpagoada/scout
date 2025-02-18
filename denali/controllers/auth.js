@@ -83,11 +83,31 @@ const resetPassword = async (req, res) => {
 
 }
 
+const getProfile = async (req, res) => {
+  try {
+    const { SCO_TOKEN } = req.cookies
+    if (SCO_TOKEN) {
+      jwt.verify(SCO_TOKEN, process.env.JWT_SECRET, {}, (err, user) => {
+        if (err) {
+          throw err
+        }
+
+        res.json(user)
+      })
+    } else {
+      res.json(null)
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 module.exports = {
   test,
   login,
   logout,
   register,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getProfile
 }

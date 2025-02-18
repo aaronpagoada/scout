@@ -1,9 +1,9 @@
 import axios from "axios"
 import { createContext, useState, useEffect } from "react"
 
-export const UserContext = createContext({})
+const UserContext = createContext({})
 
-export function UserContextProvider({ children }: any) {
+function UserContextProvider({ children }: any) {
   const [user, setUser] = useState({})
   useEffect(() => {
     if (!user) {
@@ -15,8 +15,10 @@ export function UserContextProvider({ children }: any) {
   }, [])
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={[user, setUser]}>
       {children}
     </UserContext.Provider>
   )
 }
+
+export default UserContextProvider
