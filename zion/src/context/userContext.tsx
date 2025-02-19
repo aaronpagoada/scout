@@ -1,24 +1,45 @@
 import axios from "axios"
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useContext } from "react"
 
-const UserContext = createContext({})
+interface User {
+  username: string,
+  email: string,
+  id: string,
+  iat?: string
+}
 
-function UserContextProvider({ children }: any) {
-  const [user, setUser] = useState({})
-  useEffect(() => {
-    if (!user) {
-      axios.get("/profile")
-        .then(({ data }) => {
-          setUser(data)
-        })
-    }
-  }, [])
+interface UserContextValue {
+  user: User,
+  getUser(): Promise<void>
+}
+
+export const UserContext = createContext<UserContextValue | undefined>(undefined)
+
+export function UserContextProvider({ children }: any) {
+  const [user, setUser] = useState({ username: "", email: "", id: "" })
+
+  const getUser = async () => {
+    axios.get("/profile")
+      .then(({ data }) => {
+        setUser(data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
 
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <UserContext.Provider value={{ user, getUser }}>
       {children}
     </UserContext.Provider>
   )
 }
 
-export default UserContextProvider
+export function useUserContext() {
+  const context = useContext(UserContext)
+  if (!context) {
+    throw Error("useUserContext can only be used inside UserContextProvider")
+  }
+
+  return context
+}

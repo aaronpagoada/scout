@@ -1,9 +1,16 @@
+import { useEffect } from "react"
+import { useUserContext } from "../context/userContext"
+
 function DashboardPage() {
-  const name = "Aaron"
+  const { user, getUser } = useUserContext()
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <div>{`Hi there ${name}`}</div>
+      <div className="text-black">{`Hi there ${user.username}`}</div>
     </div>
   )
 }
